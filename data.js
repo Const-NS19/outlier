@@ -320,6 +320,118 @@ window.OUTLIER_LISTS = [
   }
 ];
 
+/* Numbers in the real world: list prompts whose answers are numbers. */
+window.OUTLIER_LISTS.push(
+  {
+    id: 'popnumbers', hint: 'Type the number',
+    text: 'Name a famous number from a book, film, TV show or song',
+    mode: ['42: the Answer to Life, the Universe and Everything|42', '007: James Bond|007', '1984: George Orwell\'s novel|1984'],
+    cliche: ['666: the Number of the Beast|666'],
+    mean: ['101: Dalmatians, and Room 101 in Nineteen Eighty-Four|101', '221B: Sherlock Holmes\'s address on Baker Street|221b|221',
+      '9¾: the platform at King\'s Cross in Harry Potter|9 3/4|9.75|9 and 3 quarters', '404: Page Not Found|404',
+      '2001: A Space Odyssey|2001', '451: Fahrenheit 451|451', '24: the TV series|24', '300: the film about the Spartans|300',
+      '13: Apollo 13|13', '22: Catch-22|22', '1001: the Arabian Nights|1001', '80: Around the World in 80 Days|80',
+      '39: The 39 Steps|39', '12: 12 Angry Men|12', '11: Ocean\'s Eleven, and Eleven in Stranger Things|11', '7: Se7en|7'],
+    tail: ['237: the room in The Shining|237', '1138: THX 1138|1138', '867-5309: Jenny\'s number in the song|8675309|867 5309',
+      '23: The Number 23|23', '127: 127 Hours|127', '28: 28 Days Later|28', '500: (500) Days of Summer|500',
+      '20,000: Twenty Thousand Leagues Under the Sea|20000', '1701: the Starship Enterprise, NCC-1701|1701',
+      '4 8 15 16 23 42: the numbers in Lost|4 8 15 16 23 42', '2187: Princess Leia\'s cell in Star Wars|2187',
+      '5: Slaughterhouse-Five|5', '10: 10 Things I Hate About You|10'],
+    far: ['47: the number hidden all through Star Trek|47', '1408: the haunted hotel room|1408', '6: Number Six in The Prisoner|6',
+      '86: Agent 86, Maxwell Smart|86', '99: Agent 99, and 99 Red Balloons|99', '2046: the Wong Kar-wai film|2046', '9: District 9|9',
+      '8: Super 8|8', '1776: the musical|1776', '3: The Three Musketeers|3'],
+    gem: '24601: Jean Valjean\'s prisoner number|24601',
+    gemNote: 'Jean Valjean\'s prisoner number in Les Misérables, sung over and over in the musical.'
+  },
+  {
+    id: 'britishyears', hint: 'Type the year',
+    text: 'Name a year when something famous happened in British history',
+    mode: ['1066: the Battle of Hastings|1066', '1945: the end of the Second World War|1945', '1966: England win the World Cup|1966'],
+    cliche: ['1215: Magna Carta|1215'],
+    mean: ['1588: the Spanish Armada|1588', '1605: the Gunpowder Plot|1605', '1666: the Great Fire of London|1666', '1815: the Battle of Waterloo|1815',
+      '1914: the First World War begins|1914', '1918: the First World War ends, and some women get the vote|1918', '1940: the Battle of Britain|1940',
+      '2016: the Brexit referendum|2016', '1805: the Battle of Trafalgar|1805', '1485: the Battle of Bosworth|1485', '1649: Charles I is executed|1649',
+      '1953: the coronation of Elizabeth II|1953', '1948: the NHS is founded|1948', '2012: the London Olympics|2012'],
+    tail: ['1314: the Battle of Bannockburn|1314', '1381: the Peasants\' Revolt|1381', '1415: the Battle of Agincourt|1415',
+      '1603: the Union of the Crowns|1603', '1642: the Civil War begins|1642', '1660: the Restoration|1660', '1688: the Glorious Revolution|1688',
+      '1707: the Acts of Union with Scotland|1707', '1801: union with Ireland|1801', '1832: the Great Reform Act|1832', '1851: the Great Exhibition|1851',
+      '1928: equal voting rights for women|1928', '1973: Britain joins the EEC|1973', '1997: the handover of Hong Kong|1997', '1086: the Domesday Book|1086',
+      '1534: the Act of Supremacy|1534', '1665: the Great Plague of London|1665', '1837: Victoria becomes queen|1837', '1901: Victoria dies|1901',
+      '1863: the first London Underground line opens|1863', '1979: Margaret Thatcher becomes prime minister|1979', '2020: Britain leaves the EU|2020'],
+    far: ['43: the Roman invasion|43', '1170: Thomas Becket is murdered|1170', '1348: the Black Death arrives|1348', '1476: Caxton sets up his printing press|1476',
+      '1536: Anne Boleyn is executed|1536', '1558: Elizabeth I becomes queen|1558', '1620: the Mayflower sails|1620', '1694: the Bank of England is founded|1694',
+      '1745: the Jacobite rising|1745', '1833: the Slavery Abolition Act|1833', '1926: the General Strike|1926', '1936: Edward VIII abdicates|1936'],
+    gem: '1840: the Penny Black|1840',
+    gemNote: 'The Penny Black, the world\'s first adhesive postage stamp, went on sale in May 1840.'
+  },
+  {
+    id: 'sportnumbers', hint: 'Type the number',
+    text: 'Name a famous number from sport',
+    mode: ['147: a maximum break in snooker|147', '180: the maximum with three darts|180', '11: players in a football or cricket team|11', '18: holes in a round of golf|18'],
+    cliche: ['9.58: Usain Bolt\'s 100 m record, in seconds|9.58'],
+    mean: ['501: the starting score in darts|501', '26.2: miles in a marathon|26.2', '100: a century in cricket|100', '72: a typical par for a round of golf|72',
+      '15: players in a rugby union team|15', '40: a score in tennis|40|15|30', '6: a six in cricket|6', '23: Michael Jordan\'s shirt number|23',
+      '10: the classic number 10 shirt|10', '7: the famous number 7 shirt|7', '5: players on a basketball court|5'],
+    tail: ['300: a perfect game in ten-pin bowling|300', '13: players in a rugby league team|13', '42.195: kilometres in a marathon|42.195',
+      '19.19: Usain Bolt\'s 200 m record, in seconds|19.19', '400: Brian Lara\'s record Test innings|400', '99: Wayne Gretzky\'s shirt number|99',
+      '9: a nine-dart finish|9', '170: the highest checkout in darts|170', '22: yards in a cricket pitch|22', '4: a boundary four in cricket|4',
+      '50: the bullseye in darts|50', '25: the outer bull in darts|25', '20: overs per side in a T20 match|20'],
+    far: ['36: six sixes in one over|36', '6.0: a perfect score in old-style figure skating|6.0', '10.0: a perfect 10 in gymnastics|10.0',
+      '24: seconds on the NBA shot clock|24', '3: a three-pointer in basketball|3', '0: love in tennis|0|love', '8: rowers in an eight|8'],
+    gem: '155: the highest snooker break with a free ball|155',
+    gemNote: 'A free ball at the start can push a snooker break past 147 to a possible 155. It has been done in practice but never in a professional match.'
+  },
+  {
+    id: 'motorways', strip: ['motorway', 'the'], hint: 'Type the motorway, like M1',
+    text: 'Name a UK motorway',
+    mode: ['M1|1', 'M25|25', 'M6|6'],
+    cliche: [],
+    mean: ['M4|4', 'M5|5', 'M3|3', 'M40|40', 'M62|62', 'M11|11', 'M20|20', 'M60|60', 'M8|8', 'M42|42'],
+    tail: ['M23|23', 'M2|2', 'M18|18', 'M27|27', 'M32|32', 'M50|50', 'M54|54', 'M55|55', 'M56|56', 'M61|61', 'M65|65', 'M69|69', 'M9|9', 'M90|90',
+      'M74|74', 'M77|77', 'M80|80', 'M180|180', 'M6 Toll|m6toll'],
+    far: ['M26|26', 'M45|45', 'M48|48', 'M49|49', 'M53|53', 'M57|57', 'M58|58', 'M66|66', 'M67|67', 'M73|73', 'M181|181', 'M271|271', 'M275|275',
+      'M602|602', 'M606|606', 'M621|621', 'M876|876', 'A1(M)|a1m|a1 m', 'A3(M)|a3m|a3 m'],
+    gem: 'M898|898',
+    gemNote: 'Scotland\'s shortest motorway, about half a mile long, linking the Erskine Bridge to the M8.'
+  },
+  {
+    id: 'emergency', hint: 'Type the number',
+    text: 'Name an emergency phone number used somewhere in the world',
+    mode: ['999: UK and Ireland|999', '911: USA and Canada|911'],
+    cliche: ['112: Europe, and most mobile phones|112'],
+    mean: ['000: Australia|000', '111: New Zealand|111'],
+    tail: ['110: police in Germany, Japan and China|110', '119: Japan, South Korea and fire in China|119', '100: police in India|100',
+      '108: ambulance in India|108', '120: ambulance in China|120', '117: police in Switzerland|117', '101: fire in India|101'],
+    far: ['190: police in Brazil|190', '192: ambulance in Brazil|192', '193: fire in Brazil|193', '997: police in Poland|997', '998: fire in Poland|998',
+      '122: fire in Austria|122', '133: police in Austria|133', '144: ambulance in Austria and Switzerland|144', '118: fire in Switzerland|118',
+      '113: police in Vietnam|113', '114: fire in Vietnam|114', '115: ambulance in Vietnam|115', '17: police in France|17', '18: fire in France|18'],
+    gem: '15: ambulance (SAMU) in France|15',
+    gemNote: 'France still has separate short numbers: 15 for medical help, 17 for police and 18 for the fire brigade.'
+  },
+  {
+    id: 'apollo', strip: ['apollo', 'mission'], hint: 'Type the mission number',
+    text: 'Name a crewed Apollo mission (by its number)',
+    mode: ['Apollo 11|11', 'Apollo 13|13'],
+    cliche: [],
+    mean: ['Apollo 12|12', 'Apollo 8|8'],
+    tail: ['Apollo 17|17', 'Apollo 14|14', 'Apollo 10|10', 'Apollo 15|15', 'Apollo 16|16'],
+    far: ['Apollo 9|9'],
+    gem: 'Apollo 7|7',
+    gemNote: 'The first crewed Apollo flight, in October 1968, spent nearly 11 days orbiting Earth.'
+  },
+  {
+    id: 'lucky', hint: 'Type the number',
+    text: 'Name a number that is lucky or unlucky somewhere in the world',
+    mode: ['7|7', '13|13'],
+    cliche: ['666|666'],
+    mean: ['8: lucky in China|8', '4: unlucky in East Asia|4', '3|3', '9: unlucky in Japan|9'],
+    tail: ['888: very lucky in China|888', '6: lucky in China|6', '39: unlucky in Afghanistan|39', '14: unlucky in China|14'],
+    far: ['168: lucky in China|168', '518: lucky in China|518', '49: unlucky in Japan|49', '250: an insult in China|250', '43: unlucky in Japan|43'],
+    gem: '17: unlucky in Italy|17',
+    gemNote: 'In Roman numerals XVII can be rearranged into VIXI, "I have lived", which is a way of saying "I am dead".'
+  }
+);
+
 /* Number prompts. Each builds its set of valid answers (as decimal strings, smallest first).
    Rarity comes from where the number sits in the set and how "memorable" it is
    (round, palindromic, repeated digits or famous numbers count as more common). */
@@ -341,7 +453,10 @@ window.OUTLIER_NUMBER_TEMPLATES = [
   { id: 'mersenne', make: () => ({ text: 'Name a Mersenne prime (a prime that is one less than a power of 2)', set: [2, 3, 5, 7, 13, 17, 19, 31, 61, 89, 107, 127].map(p => (2n ** BigInt(p) - 1n).toString()), cliche: ['2147483647'] }) },
   { id: 'perfect', make: () => ({ text: 'Name a perfect number', set: ['6', '28', '496', '8128', '33550336', '8589869056', '137438691328', '2305843008139952128'] }) },
   { id: 'eight', make: () => ({ text: 'Name a number under 1000 with exactly eight factors', set: range(1, 999).filter(n => range(1, n).filter(d => n % d === 0).length === 8).map(String) }) },
-  { id: 'primeyear', make: () => ({ text: 'Name a year between 1900 and 2100 that is a prime number', set: primesBetween(1900, 2100), cliche: ['2027', '1999'] }) }
+  { id: 'primeyear', make: () => ({ text: 'Name a year between 1900 and 2100 that is a prime number', set: primesBetween(1900, 2100), cliche: ['2027', '1999'] }) },
+  { id: 'roulette', make: () => ({ text: 'Name a number on a European roulette wheel', set: range(0, 36).map(String), cliche: ['17'] }) },
+  { id: 'darts', make: () => ({ text: 'Name a score you can get with a single dart', set: [...new Set(range(1, 20).flatMap(n => [n, 2 * n, 3 * n]).concat([25, 50]))].sort((a, b) => a - b).map(String), cliche: ['60', '50'] }) },
+  { id: 'leap', make: () => ({ text: 'Name a leap year between 1900 and 2100', set: range(1901, 2099).filter(y => (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0).map(String), cliche: ['2000'] }) }
 ];
 
 function range(a, b) { const out = []; for (let i = a; i <= b; i++) out.push(i); return out; }

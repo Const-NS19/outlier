@@ -45,7 +45,8 @@ const zOf = score => score / 175;
 
 /* ---------- answer matching ---------- */
 function norm(s) {
-  return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
+  return s.toLowerCase().replace(/¾/g, ' 3/4').replace(/½/g, ' 1/2').replace(/¼/g, ' 1/4').normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/\b([a-z])\s+(\d)/g, '$1$2')
     .replace(/[’'`]s\b/g, '').replace(/[’'`]/g, '').replace(/[–—-]/g, ' ')
     .replace(/[^a-z0-9πθαβγδεζηικλμνξορστυφχψωσ√+*^=. ]/g, ' ').replace(/\s+/g, ' ').trim();
 }
@@ -85,13 +86,14 @@ function buildListPrompt(p) {
     const list = t === 'outlier' ? [p.gem] : (p[t] || []);
     for (const raw of list) add(raw, t);
   }
-  return { kind: 'list', id: p.id, text: p.text, entries, index, strip: p.strip,
+  return { kind: 'list', id: p.id, text: p.text, hint: p.hint, entries, index, strip: p.strip,
     all: () => entries.map(e => ({ display: e.display, tier: e.tier })),
     gem: entries.find(e => e.tier === 'outlier'),
     match(input) {
       const k = keyOf(input, p.strip); if (!k) return null;
       const hit = index.get(k) || index.get(singular(k));
       if (hit) return { entry: hit, corrected: false };
+      if (/\d/.test(k)) return null;   // never "correct" numbers: 1067 is not a typo for 1066
       const cap = k.length <= 3 ? 0 : k.length <= 7 ? 1 : 2; if (!cap) return null;
       let best = null, bd = cap + 1;
       for (const [key, e] of index) { const dist = editDistance(k, key, cap); if (dist < bd) { bd = dist; best = e; } }
@@ -226,7 +228,7 @@ function nextRound() {
   renderHeader();
   $('#roundlabel').textContent = `Question ${G.round + 1} of ${ROUNDS}`;
   $('#prompt').textContent = p.text;
-  $('#kind').textContent = p.kind === 'number' ? 'Number answer · you can type sums like 2^10 or 7*13' : 'Word answer · spelling is forgiven';
+  $('#kind').textContent = p.kind === 'number' ? 'Number answer · you can type sums like 2^10 or 7*13' : p.hint ? p.hint : 'Word answer · spelling is forgiven';
   $('#reveal').hidden = true; $('#play').hidden = false;
   const inp = $('#answer'); inp.value = ''; inp.disabled = true; $('#go').disabled = true; setMsg('');
   inp.inputMode = p.kind === 'number' ? 'numeric' : 'text';
