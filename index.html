@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Outlier · the daily maths game from The Axiom</title>
+<meta name="description" content="Seven maths questions a day. Any right answer counts, but the rarer your answer, the further out on the curve you go. From The Axiom, Eton's maths publication.">
+<meta name="theme-color" content="#07070a">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="grid"></div>
+
+<header class="top">
+  <button class="homebtn brand" aria-label="Outlier home"><span class="logo">Outlier</span></button>
+  <nav>
+    <button id="howbtn" class="icon" aria-label="How to play">?</button>
+    <button id="setbtn" class="icon" aria-label="Settings">⚙</button>
+  </nav>
+</header>
+
+<main>
+  <!-- HOME -->
+  <section id="home" class="screen">
+    <h1 class="title">Outlier</h1>
+    <p class="tag">The maths game where the <em>rarest</em> right answer wins.</p>
+    <div class="homecurve" aria-hidden="true">
+      <svg viewBox="0 0 400 110"><defs><linearGradient id="hg" x1="0" x2="1"><stop offset="0" stop-color="#e0344b"/><stop offset=".5" stop-color="#9b4dff"/><stop offset="1" stop-color="#3d7bff"/></linearGradient></defs>
+        <path d="M0 100 C80 100 120 8 200 8 S320 100 400 100" fill="none" stroke="url(#hg)" stroke-width="3"/>
+        <circle cx="356" cy="93" r="6" fill="#ff4d6d"/><text x="356" y="80" text-anchor="middle" class="hc">you?</text></svg>
+    </div>
+    <div class="modes">
+      <button id="playdaily" class="mode daily">
+        <span class="mtitle">Daily <span id="dailynum"></span></span>
+        <span class="msub" id="dailystate"></span>
+      </button>
+      <button id="playunlimited" class="mode unlimited">
+        <span class="mtitle">Unlimited ∞</span>
+        <span class="msub" id="unlimitedstate"></span>
+      </button>
+    </div>
+    <div class="stats"></div>
+    <p class="fine">Made by <a class="axiomlink" href="#">The Axiom</a>, Eton's flagship maths publication.</p>
+  </section>
+
+  <!-- GAME -->
+  <section id="game" class="screen" hidden>
+    <div class="hud">
+      <div><span class="lab" id="modelabel"></span><div id="dots" class="dots"></div></div>
+      <div class="hudr"><span class="lab">score</span><b id="score">0</b><span class="z" id="zval">+0.00σ</span></div>
+    </div>
+    <div id="curvebox"></div>
+    <div class="card">
+      <div class="lab" id="roundlabel"></div>
+      <h2 id="prompt"></h2>
+      <div class="kind" id="kind"></div>
+      <div id="play">
+        <form id="form" autocomplete="off">
+          <div class="answerrow" id="answerrow">
+            <div class="clock" id="clock"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="26" class="rbg"/><circle id="ring" cx="30" cy="30" r="26" class="rfg"/></svg><span id="clocknum">3</span></div>
+            <input id="answer" type="text" placeholder="Type one answer…" aria-label="Your answer" autocapitalize="off" spellcheck="false" maxlength="80">
+            <button id="go" class="btn primary" type="submit">Go</button>
+          </div>
+        </form>
+        <p id="msg" class="msg" role="status" aria-live="polite"></p>
+      </div>
+      <div id="reveal" class="reveal" hidden aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- END -->
+  <section id="end" class="screen" hidden>
+    <p class="lab" id="endtitle"></p>
+    <div class="endscore"><b id="endscore">0</b><span>points</span></div>
+    <p class="endz" id="endz"></p>
+    <div id="endcurve"></div>
+    <p class="band" id="endband"></p>
+    <pre id="sharebox" class="sharebox"></pre>
+    <div class="endbtns">
+      <button id="share" class="btn primary">Share result</button>
+      <button id="again" class="btn">Play again ∞</button>
+      <button id="gotounlimited" class="btn">Try Unlimited ∞</button>
+      <button class="btn homebtn">Home</button>
+    </div>
+    <p id="nextin" class="nextin"></p>
+    <h3 class="sub">Your answers</h3>
+    <ol id="rows" class="rows"></ol>
+    <h3 class="sub">Your stats</h3>
+    <div class="stats"></div>
+  </section>
+</main>
+
+<dialog id="how">
+  <button class="close" aria-label="Close">×</button>
+  <h2>How to play</h2>
+  <ol class="howlist">
+    <li>You get <b>7 questions</b>. Each has lots of right answers, from famous mathematicians to prime numbers.</li>
+    <li>Read the question, then you have <b>30 seconds</b> to name one answer. Wrong guesses just let you try again.</li>
+    <li>Any right answer scores, but <b>rarer answers score more</b>. The obvious pick barely moves you; the obscure one sends you far into the tail.</li>
+    <li>Watch out for <b>Clichés</b>: the "clever" answer that everyone thinks is clever.</li>
+    <li>Your score moves you along the bell curve. Finish <b>+4σ from the mean</b> and you're a true Outlier.</li>
+    <li>The <b>Daily</b> is the same for everyone and resets at midnight UK time. <b>Unlimited</b> never runs out.</li>
+  </ol>
+  <h3>Tiers</h3>
+  <ul id="tierlist" class="tierlist"></ul>
+  <p class="fine">Number questions accept sums, so 2^10, 7*13 or 2^31-1 all work. Spelling mistakes in word answers are forgiven.</p>
+  <button class="btn primary close">Let's go</button>
+</dialog>
+
+<dialog id="settings">
+  <button class="close" aria-label="Close">×</button>
+  <h2>Settings</h2>
+  <label class="toggle"><input type="checkbox" id="confirmfix"><span><b>Check spelling fixes</b><em>Show the corrected answer before scoring it.</em></span></label>
+  <label class="toggle"><input type="checkbox" id="clearwrong"><span><b>Clear wrong answers</b><em>Empty the box after a wrong guess.</em></span></label>
+  <p class="fine">Your scores and streaks are saved on this device only.</p>
+  <button class="btn primary close">Done</button>
+</dialog>
+
+<div id="toast" class="toast" role="status"></div>
+<script src="data.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
