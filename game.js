@@ -86,6 +86,7 @@ function buildListPrompt(p) {
     for (const raw of list) add(raw, t);
   }
   return { kind: 'list', id: p.id, text: p.text, entries, index, strip: p.strip,
+    all: () => entries.map(e => ({ display: e.display, tier: e.tier })),
     gem: entries.find(e => e.tier === 'outlier'),
     match(input) {
       const k = keyOf(input, p.strip); if (!k) return null;
@@ -135,6 +136,7 @@ function buildNumberPrompt(tpl, r) {
   const outliers = set.filter(s => tierOf(s) === 'outlier');
   const gemStr = outliers.length ? outliers[Math.floor(r() * outliers.length)] : set[set.length - 1];
   return { kind: 'number', id: tpl.id, text: made.text, count: set.length,
+    all: () => set.map(s => ({ display: fmtNum(s), tier: tierOf(s) })),
     gem: { display: fmtNum(gemStr), tier: 'outlier', note: `One of the rarest of the ${set.length.toLocaleString('en-GB')} valid answers.` },
     match(input) { const v = parseNumber(input); if (v === null) return null; if (!pos.has(v)) return { invalidNumber: v };
       return { entry: { display: fmtNum(v), tier: tierOf(v), note: '' }, corrected: false }; } };
@@ -279,10 +281,10 @@ function reveal(res) {
   const t = TIERS[res.tier];
   $('#play').hidden = true; const box = $('#reveal'); box.hidden = false; box.className = 'reveal t-' + res.tier;
   box.innerHTML = res.tier === 'miss'
-    ? `<div class="rtier">Time's up</div><p class="rsub">The Outlier answer was <b>${esc(res.gem)}</b>.</p>${res.gemNote ? `<p class="rnote">${esc(res.gemNote)}</p>` : ''}`
+    ? `<div class="rtier">Time's up</div><p class="rsub">No answer this time. You'll see every possible answer at the end.</p>`
     : `<div class="remoji">${t.emoji}</div><div class="rtier">${t.name}</div><div class="rans">“${esc(res.answer)}”</div>
-       <div class="rpts">+${t.pts} points</div><p class="rsub">${t.blurb}</p>${res.tier === 'outlier' && res.note ? `<p class="rnote">${esc(res.note)}</p>` : (res.tier !== 'outlier' ? `<p class="rnote">Outlier answer: <b>${esc(res.gem)}</b></p>` : '')}`;
-  box.innerHTML += `<button id="next" class="btn primary">${G.round >= ROUNDS ? 'See your results' : 'Next question'} →</button>`;
+       <div class="rpts">+${t.pts} points</div><p class="rsub">${t.blurb}</p>${res.tier === 'outlier' && res.note ? `<p class="rnote">${esc(res.note)}</p>` : ''}`;
+  box.innerHTML += `<button id="next" class="btn primary">${G.round >= ROUNDS ? 'See results' : 'Next question'} →</button>`;
   $('#next').onclick = () => nextRound(); $('#next').focus();
 }
 
@@ -309,10 +311,10 @@ function showEnd(results) {
   $('#endband').innerHTML = `<b>${band.name}.</b> ${band.line}`;
   $('#endcurve').innerHTML = curveSVG('e');
   setTimeout(() => placeMarker('e', s), 60);
-  $('#rows').innerHTML = results.map((r, i) => { const t = TIERS[r.tier]; return `<li class="row t-${r.tier}">
+  $('#rows').innerHTML = results.map((r, i) => { const t = TIERS[r.tier]; const p = G.prompts[i]; return `<li class="row t-${r.tier}">
       <div class="rq"><span class="rn">${i + 1}</span>${esc(r.text)}</div>
       <div class="ra"><span class="chip">${t.emoji} ${t.name}${t.pts ? ' · +' + t.pts : ''}</span> ${r.answer ? '“' + esc(r.answer) + '”' : '<i>no answer</i>'}</div>
-      ${r.tier !== 'outlier' ? `<div class="rg">Outlier: <b>${esc(r.gem)}</b>${r.gemNote ? ' – ' + esc(r.gemNote) : ''}</div>` : (r.note ? `<div class="rg">${esc(r.note)}</div>` : '')}
+      ${p && p.text === r.text ? allAnswersHTML(p, r) : ''}
     </li>`; }).join('');
   const share = shareText(results); $('#sharebox').textContent = share;
   $('#share').onclick = async () => { try { if (navigator.share && matchMedia('(pointer:coarse)').matches) await navigator.share({ text: share }); else { await navigator.clipboard.writeText(share); toast('Copied – paste it anywhere'); } } catch { toast('Select the text above to copy it'); } };
@@ -320,6 +322,18 @@ function showEnd(results) {
   $('#gotounlimited').hidden = G.mode !== 'daily';
   renderStats();
   if (G.mode === 'daily') tickCountdown();
+}
+function allAnswersHTML(p, r) {
+  const all = p.all(); const order = ['outlier', 'far', 'tail', 'mean', 'cliche', 'mode'];
+  const mine = r.answer; let html = '';
+  for (const k of order) {
+    const items = all.filter(a => a.tier === k); if (!items.length) continue;
+    const t = TIERS[k];
+    html += `<div class="tiergroup t-${k}"><div class="tg-head">${t.emoji} ${t.name} <span>+${t.pts} · ${items.length}</span></div>
+      ${k === 'outlier' && p.kind === 'list' && p.gem.note ? `<p class="tg-note"><b>${esc(p.gem.display)}</b>: ${esc(p.gem.note)}</p>` : ''}
+      <div class="tg-list">${items.map(a => `<span class="ans${a.display === mine ? ' mine' : ''}">${esc(a.display)}</span>`).join('')}</div></div>`;
+  }
+  return `<details class="every"><summary>Show every answer (${all.length.toLocaleString('en-GB')})</summary>${html}</details>`;
 }
 function shareText(results) {
   const s = scoreOf(results);
