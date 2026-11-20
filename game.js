@@ -2,7 +2,7 @@
 'use strict';
 
 /* ---------- constants ---------- */
-const ROUNDS = 7, PREVIEW_MS = 3000, ANSWER_MS = 30000;
+const ROUNDS = 7, PREVIEW_MS = 3000, ANSWER_MS = 20000;
 const EPOCH = '2026-11-20';            // Outlier #1
 const TZ = 'Europe/London';            // the daily resets at midnight UK time
 const HOME_URL = 'https://theaxiommaths.com';
@@ -245,7 +245,7 @@ function beginAnswering() {
   timer = setInterval(() => {
     const left = G.deadline - Date.now();
     setRing(Math.max(0, left / ANSWER_MS)); $('#clocknum').textContent = Math.max(0, Math.ceil(left / 1000));
-    $('#clock').classList.toggle('low', left < 8000);
+    $('#clock').classList.toggle('low', left < 6000);
     if (left <= 0) { clearInterval(timer); timeUp(); }
   }, 100);
 }
