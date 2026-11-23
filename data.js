@@ -242,7 +242,7 @@ window.OUTLIER_LISTS = [
       'Cheryl\'s birthday', 'Blue-eyed islanders|blue eyes', 'Prisoners and hats|hat puzzle', 'Two eggs|egg drop', 'Soma cube', 'Pentominoes|pentomino',
       'Monkey and the coconuts|monkey and coconuts', 'Water pouring|die hard jugs', 'Birthday problem', 'Secretary problem'],
     far: ['Langley\'s adventitious angles|adventitious angles', 'Muddy children', '100 prisoners|hundred prisoners', 'Instant Insanity', 'Lights Out',
-      'Sam Loyd\'s', 'Bridge and torch', 'Utility problem|three utilities', 'Thirty-six officers|36 officers', 'Kirkman\'s schoolgirl|schoolgirl problem',
+      'Sam Loyd\'s', 'Bridge and torch', 'Utility problem|three utilities', 'Thirty-six officers|36 officers',
       'Dudeney\'s dissection|haberdasher', 'Mutilated chessboard', 'Sleeping barber', 'Pirate game', 'Coin weighing|twelve coins|12 coins'],
     gem: 'Kirkman\'s schoolgirl problem|Kirkman',
     gemNote: 'Fifteen schoolgirls walk out in threes every day for a week. Can they be arranged so no two walk together twice? (Yes.)'
@@ -310,7 +310,7 @@ window.OUTLIER_LISTS = [
     mode: ['Equilateral', 'Isosceles', 'Right-angled|right|right angle'],
     cliche: ['Penrose triangle|impossible triangle|Penrose'],
     mean: ['Scalene', 'Acute', 'Obtuse', 'Equiangular'],
-    tail: ['Sierpiński triangle|Sierpinski', 'Reuleaux triangle|Reuleaux', 'Pascal\'s triangle|Pascal', 'Golden triangle', '30-60-90|30 60 90',
+    tail: ['Sierpiński triangle|Sierpinski', 'Reuleaux triangle|Reuleaux', 'Pascal\'s triangle|Pascal|Yang Hui\'s triangle|Yang Hui|Tartaglia\'s triangle|Tartaglia', 'Golden triangle', '30-60-90|30 60 90',
       '45-45-90|45 45 90|right isosceles', 'Pythagorean triangle|3-4-5|3 4 5', 'Degenerate', 'Similar', 'Congruent', 'Spherical triangle|spherical'],
     far: ['Kepler triangle|Kepler', 'Heronian triangle|Heronian|Heron', 'Medial triangle|medial', 'Orthic triangle|orthic', 'Pedal triangle|pedal',
       'Contact triangle|intouch triangle', 'Excentral triangle|excentral', 'Schwarz triangle|Schwarz', 'Equable triangle|equable', 'Hyperbolic triangle',
@@ -402,9 +402,9 @@ window.OUTLIER_LISTS.push(
     mean: ['000: Australia|000', '111: New Zealand|111'],
     tail: ['110: police in Germany, Japan and China|110', '119: Japan, South Korea and fire in China|119', '100: police in India|100',
       '108: ambulance in India|108', '120: ambulance in China|120', '117: police in Switzerland|117', '101: fire in India|101'],
-    far: ['190: police in Brazil|190', '192: ambulance in Brazil|192', '193: fire in Brazil|193', '997: police in Poland|997', '998: fire in Poland|998',
-      '122: fire in Austria|122', '133: police in Austria|133', '144: ambulance in Austria and Switzerland|144', '118: fire in Switzerland|118',
-      '113: police in Vietnam|113', '114: fire in Vietnam|114', '115: ambulance in Vietnam|115', '17: police in France|17', '18: fire in France|18'],
+    far: ['190: police in Brazil|190', '192: ambulance in Brazil|192', '193: fire in Brazil|193', '997: police in Poland, ambulance in Saudi Arabia|997', '998: fire in Poland|998',
+      '122: fire in Austria, police in Egypt|122', '133: police in Austria|133', '144: ambulance in Austria and Switzerland|144', '118: fire in Switzerland, ambulance in Italy|118',
+      '113: police in Vietnam and Italy|113', '114: fire in Vietnam|114', '115: ambulance in Vietnam, fire in Italy|115', '17: police in France|17', '18: fire in France|18'],
     gem: '15: ambulance (SAMU) in France|15',
     gemNote: 'France still has separate short numbers: 15 for medical help, 17 for police and 18 for the fire brigade.'
   },
@@ -431,6 +431,143 @@ window.OUTLIER_LISTS.push(
     gemNote: 'In Roman numerals XVII can be rearranged into VIXI, "I have lived", which is a way of saying "I am dead".'
   }
 );
+
+/* Extra answers (November 2026), merged into the lists above so every open question has a wide spread,
+   from the obvious to the properly niche. Closed sets (Greek letters, Millennium Problems, Apollo missions,
+   Fields medallists) are already complete and are left alone. */
+(function () {
+  const EXTRA = {
+    women: {
+      tail: ['Gladys West', 'Annie Easley', 'Christine Darden', 'Evelyn Boyd Granville', 'Cathy O\'Neil', 'Caroline Series', 'Ulrike Tillmann', 'Vicky Neale'],
+      far: ['Fan Chung', 'Claire Voisin', 'Sun-Yung Alice Chang', 'Maria Chudnovsky', 'Vera Pless', 'Melba Roy Mouton', 'Lisa Sauermann', 'Theano',
+        'Hilda Hudson', 'Bertha Swirles', 'Olga Oleinik', 'Nina Bari', 'Pelageya Kochina', 'Raman Parimala', 'Sylvia Serfaty', 'Laure Saint-Raymond']
+    },
+    constants: {
+      mean: ['Natural log of 2|ln 2|log 2|0.693', 'Zero|0', 'One|1'],
+      tail: ['Cube root of 2|∛2|Delian constant', 'Supergolden ratio', 'Bronze ratio', 'Second Feigenbaum constant|Feigenbaum alpha', 'Ramanujan\'s constant|e^(π√163)'],
+      far: ['Erdős–Borwein constant|Erdos Borwein', 'Bernstein\'s constant', 'Universal parabolic constant', 'Sierpiński\'s constant|Sierpinski constant',
+        'Golomb–Dickman constant|Golomb Dickman', 'Niven\'s constant', 'Backhouse\'s constant', 'Artin\'s constant', 'Viswanath\'s constant',
+        'Fransén–Robinson constant|Fransen Robinson', 'Kepler–Bouwkamp constant|Kepler Bouwkamp', 'Somos\' quadratic recurrence constant|Somos',
+        'Ramanujan–Soldner constant|Soldner']
+    },
+    branches: {
+      tail: ['Mathematical physics', 'Financial mathematics', 'Mathematical biology|biomathematics'],
+      far: ['Actuarial science', 'Control theory', 'Coding theory', 'Additive combinatorics', 'Analytic number theory', 'Geometric group theory',
+        'Low-dimensional topology']
+    },
+    polyhedra: {
+      tail: ['Pentagonal bipyramid', 'Heptagonal prism', 'Pentagonal trapezohedron|d10'],
+      far: ['Snub disphenoid', 'Triakis tetrahedron', 'Compound of five tetrahedra', 'Jessen\'s icosahedron|Jessen', 'Dürer\'s solid|Durer solid',
+        'Gyrobifastigium', 'Pentagonal rotunda', 'Square cupola', 'Tetrahemihexahedron', 'Pyritohedron']
+    },
+    distributions: {
+      tail: ['Multivariate normal|bivariate normal', 'Categorical', 'Power law'],
+      far: ['Arcsine', 'Generalised extreme value|GEV|generalized extreme value', 'Fréchet|Frechet', 'Burr', 'Inverse Gaussian|Wald', 'Nakagami',
+        'Rice|Rician', 'Yule–Simon|Yule Simon', 'Borel', 'Irwin–Hall|Irwin Hall', 'Logarithmic|log-series', 'Gompertz', 'Noncentral chi-squared',
+        'Marchenko–Pastur|Marchenko Pastur', 'Poisson binomial', 'Half-normal|half normal', 'Truncated normal', 'Bose–Einstein|Bose Einstein',
+        'Fermi–Dirac|Fermi Dirac']
+    },
+    unsolved: {
+      tail: ['abc conjecture|abc', 'Beal conjecture|Beal', 'Infinitely many Mersenne primes|Mersenne primes', 'Polignac\'s conjecture|Polignac',
+        'Is e + π irrational|e plus pi'],
+      far: ['Kissing number problem|kissing number', 'Erdős–Gyárfás conjecture|Erdos Gyarfas', 'Graceful tree conjecture|graceful labelling',
+        'Hadamard conjecture|Hadamard matrices', 'Singmaster\'s conjecture|Singmaster', 'Is the Euler–Mascheroni constant irrational|gamma irrational',
+        'Andrica\'s conjecture|Andrica', 'Oppermann\'s conjecture|Oppermann', 'Cramér\'s conjecture|Cramer', 'Are there more Fermat primes|Fermat primes',
+        'Bunyakovsky conjecture|Bunyakovsky', 'Hilbert\'s sixteenth problem|Hilbert 16th', 'Invariant subspace problem', 'Reconstruction conjecture',
+        'Hadwiger conjecture', 'Sendov\'s conjecture|Sendov', 'Magic square of squares', 'Erdős conjecture on arithmetic progressions|Erdos arithmetic progressions']
+    },
+    polygons: {
+      tail: ['Isosceles trapezium|isosceles trapezoid', 'Golden rectangle'],
+      far: ['Cyclic quadrilateral', 'Tetracontagon', 'Pentacontagon', 'Googolgon']
+    },
+    sequences: {
+      far: ['Tetranacci', 'Narayana\'s cows|Narayana', 'Juggler sequence|juggler', 'Aliquot sequence|aliquot', 'Van Eck\'s sequence|Van Eck', 'EKG sequence|EKG',
+        'Gijswijt\'s sequence|Gijswijt', 'Twin primes', 'Lucky numbers', 'Sophie Germain primes', 'Star numbers', 'Centred hexagonal numbers|hex numbers',
+        'Pronic numbers|oblong numbers', 'Taxicab numbers|taxicab', 'Repunits|repunit']
+    },
+    fractals: {
+      tail: ['Sierpiński pyramid|Sierpinski tetrahedron|Sierpinski pyramid', 'Fractal tree|binary tree', 'Lightning|Lichtenberg figure', 'Coastline of Britain|coastline'],
+      far: ['Cantor dust', 'Moore curve', 'Sierpiński curve|Sierpinski curve', 'Sierpiński arrowhead|Sierpinski arrowhead', 'Hexaflake', 'Pentaflake',
+        'Jerusalem cube', 'Mosely snowflake', 'Fibonacci word fractal', 'Rössler attractor|Rossler', 'Logistic map|bifurcation diagram|Feigenbaum tree',
+        'Buddhabrot', 'Tricorn|Mandelbar', 'Douady rabbit', 'H-tree|H fractal', 'Brownian motion']
+    },
+    paradoxes: {
+      tail: ['Ship of Theseus|Theseus', 'Three prisoners', 'Missing dollar|missing dollar riddle', 'Bertrand\'s chord paradox|Bertrand chord'],
+      far: ['Interesting number paradox|interesting number', 'Card paradox|Jourdain', 'Yablo\'s|Yablo', 'Crocodile dilemma|crocodile', 'Omnipotence paradox|omnipotence',
+        'Elevator paradox|elevator', 'Inspection paradox|waiting time', 'Thomson\'s lamp|Thomson', 'Ross–Littlewood|vase|Ross Littlewood',
+        'Smale\'s paradox|sphere eversion', 'Lottery paradox|lottery', 'Preface paradox|preface', 'Paradox of the court|Protagoras', 'Will Rogers phenomenon|Will Rogers']
+    },
+    numbertypes: {
+      mean: ['Positive'],
+      far: ['Pentagonal', 'Regular numbers|Hamming numbers|5-smooth', 'Practical', 'Pandigital']
+    },
+    proofs: {
+      tail: ['Proof by symmetry|symmetry', 'Geometric proof|dissection|rearrangement', 'Coordinate proof|coordinate geometry|analytic proof', 'Vector proof|vectors',
+        'Inclusion–exclusion|inclusion exclusion', 'Generating functions', 'Epsilon-delta|epsilon delta'],
+      far: ['Discharging method|discharging', 'Polynomial method', 'Linear algebra method', 'Fixed-point argument|fixed point', 'Monovariant',
+        'Minimal counterexample|smallest counterexample|minimal criminal', 'Burnside\'s lemma|Burnside']
+    },
+    puzzles: {
+      tail: ['KenKen', 'Nonogram|Picross|griddler', 'Minesweeper', 'Countdown numbers game|Countdown', '24 game|make 24', 'Peg solitaire', 'Cross-number|crossnumber',
+        'Knights and knaves', 'Squaring the circle'],
+      far: ['Futoshiki', 'Slitherlink', 'Nurikabe', 'Hardest logic puzzle ever|three gods', 'Lion and man|lion and christian', 'Problem of Apollonius|Apollonius',
+        'Ant on a rubber rope|rubber rope', 'Brachistochrone', 'Buffon\'s needle|Buffon', 'Basel problem|Basel', 'Doubling the cube', 'Angle trisection|trisecting an angle']
+    },
+    calculus: {
+      mean: ['Sum rule'],
+      tail: ['Constant multiple rule', 'Reverse chain rule|integration by inspection|inspection', 'Small angle approximation|small angle',
+        'Volumes of revolution|volume of revolution', 'Inverse function rule', 'Partial differentiation|partial derivatives', 'Riemann sums|Riemann sum',
+        'Intermediate value theorem', 'Trigonometric substitution|trig substitution', 'Ratio test'],
+      far: ['Hyperbolic substitution', 'Euler–Lagrange equation|calculus of variations|Euler Lagrange', 'Divergence theorem|Gauss\'s theorem', 'Fourier series',
+        'Euler–Maclaurin formula|Euler Maclaurin', 'Fubini\'s theorem|Fubini', 'Dominated convergence theorem|dominated convergence', 'Cauchy\'s integral formula',
+        'Shell method|disc method|washer method', 'Comparison test', 'Integral test']
+    },
+    games: {
+      tail: ['Connect Four|connect 4', 'Draughts|checkers', 'Dots and boxes', 'Cake cutting|I cut you choose|fair division', 'Coordination game|coordination',
+        'Vickrey auction|second-price auction|auction'],
+      far: ['Othello|Reversi', 'Oware|Awari', 'Wythoff\'s game|Wythoff', 'Domineering', 'Kayles', 'Sylver coinage', 'Sim', 'Penney\'s game|Penney',
+        'Nash demand game', 'Minority game', 'Inspection game', 'Truel|duel', 'Divide the dollar', 'All-pay auction']
+    },
+    triangles: {
+      tail: ['Oblique', 'Floyd\'s triangle|Floyd'],
+      far: ['Golden gnomon', 'Ideal triangle', 'Automedian', 'Bell triangle', 'Leibniz harmonic triangle|harmonic triangle', 'Cevian triangle|cevian',
+        'Anticomplementary triangle|anticomplementary', 'Tangential triangle|tangential']
+    },
+    popnumbers: {
+      mean: ['88: miles per hour in Back to the Future|88', '64: When I\'m Sixty-Four|64', '4: the Fantastic Four|4', '21: 21 Jump Street, and Adele\'s album|21'],
+      tail: ['73: Sheldon Cooper\'s favourite number|73', '1.21: gigawatts in Back to the Future|1.21', '1917: the Sam Mendes film|1917', '1999: the Prince song|1999',
+        '2012: the disaster film|2012', '2049: Blade Runner 2049|2049', '1989: Taylor Swift\'s album|1989', '50: 50 First Dates|50', '16: Sixteen Candles|16',
+        '19: Adele\'s first album|19', '25: Adele\'s third album|25']
+    },
+    sportnumbers: {
+      mean: ['90: minutes in a football match|90', '60: treble 20 in darts|60', '12: the twelfth man|12', '21: points to win a game of badminton|21'],
+      tail: ['80: minutes in a rugby match|80', '38: games in a Premier League season|38', '32: teams in the NFL|32', '48: teams at the 2026 World Cup|48',
+        '1500: metres in the "metric mile"|1500', '44: Lewis Hamilton\'s car number|44', '46: Valentino Rossi\'s bike number|46', '59: a round of 59 in golf|59'],
+      far: ['99.94: Don Bradman\'s Test batting average|99.94', '49: Rocky Marciano\'s unbeaten 49-0 record|49', '162: games in an MLB regular season|162',
+        '82: games in an NBA regular season|82', '2.45: Javier Sotomayor\'s high jump record, in metres|2.45', '8.95: Mike Powell\'s long jump record, in metres|8.95',
+        '10000: metres in the longest track race|10000|10,000']
+    },
+    emergency: {
+      tail: ['102: ambulance in India|102', '995: ambulance in Singapore|995'],
+      far: ['10111: police in South Africa|10111', '10177: ambulance in South Africa|10177', '1669: ambulance in Thailand|1669', '191: police in Thailand|191',
+        '199: fire in Thailand|199', '123: ambulance in Egypt, and the emergency number in Colombia|123', '1122: rescue in Pakistan|1122',
+        '131: ambulance in Chile|131', '132: fire in Chile|132',
+        '106: text relay for deaf callers in Australia|106', '03: ambulance in Russia|03|103', '02: police in Russia|02', '01: fire in Russia|01']
+    },
+    lucky: {
+      mean: ['2: lucky in China, as good things come in pairs|2', '18: lucky in Judaism, as it spells "chai", life|18', '99: lucky in China, for "long-lasting"|99'],
+      tail: ['111: Nelson, unlucky in English cricket|111', '87: unlucky in Australian cricket, 13 short of 100|87', '108: sacred in Hinduism and Buddhism|108',
+        '42: unlucky in Japan, sounds like "to death"|42', '520: means "I love you" in Chinese|520'],
+      far: ['222: double Nelson in cricket|222', '786: lucky for many Muslims in South Asia|786', '1314: means "for a lifetime" in Chinese|1314',
+        '44: doubly unlucky in East Asia|44', '74: unlucky in China|74']
+    }
+  };
+  const byId = new Map(window.OUTLIER_LISTS.map(q => [q.id, q]));
+  for (const [id, tiers] of Object.entries(EXTRA)) {
+    const q = byId.get(id); if (!q) continue;
+    for (const [tier, items] of Object.entries(tiers)) q[tier] = (q[tier] || []).concat(items);
+  }
+})();
 
 /* Number prompts. Each builds its set of valid answers (as decimal strings, smallest first).
    Rarity comes from where the number sits in the set and how "memorable" it is

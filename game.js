@@ -2,7 +2,7 @@
 'use strict';
 
 /* ---------- constants ---------- */
-const ROUNDS = 7, PREVIEW_MS = 3000, ANSWER_MS = 20000;
+const ROUNDS = 7, PREVIEW_MS = 3000, ANSWER_MS = 30000;
 const EPOCH = '2026-11-20';            // Outlier #1
 const TZ = 'Europe/London';            // the daily resets at midnight UK time
 const HOME_URL = 'https://theaxiommaths.com';
@@ -45,7 +45,7 @@ const zOf = score => score / 175;
 
 /* ---------- answer matching ---------- */
 function norm(s) {
-  return s.toLowerCase().replace(/¾/g, ' 3/4').replace(/½/g, ' 1/2').replace(/¼/g, ' 1/4').normalize('NFD').replace(/[̀-ͯ]/g, '')
+  return s.toLowerCase().replace(/#/g, ' sharp').replace(/¾/g, ' 3/4').replace(/½/g, ' 1/2').replace(/¼/g, ' 1/4').normalize('NFD').replace(/[̀-ͯ]/g, '')
     .replace(/\b([a-z])\s+(\d)/g, '$1$2')
     .replace(/[’'`]s\b/g, '').replace(/[’'`]/g, '').replace(/[–—-]/g, ' ')
     .replace(/[^a-z0-9πθαβγδεζηικλμνξορστυφχψωσ√+*^=. ]/g, ' ').replace(/\s+/g, ' ').trim();
@@ -147,12 +147,17 @@ function buildNumberPrompt(tpl, r) {
 const LISTS = window.OUTLIER_LISTS.map(buildListPrompt);
 const NUMS = window.OUTLIER_NUMBER_TEMPLATES;
 
+/* The second question bank (data2.js) joins the Daily from Daily #5. Earlier dailies keep using the
+   original 28 questions, so a daily never changes for someone who has already played it. */
+const ORIGINAL_LISTS = 28, BANK2_FROM_DAY = 5;
 function promptsForDay(day) {
   const listPer = 4, numPer = 3;
-  const lc = Math.floor(LISTS.length / listPer), nc = Math.floor(NUMS.length / numPer);
-  const lCycle = Math.floor((day - 1) / lc), nCycle = Math.floor((day - 1) / nc);
-  const lp = shuffle(LISTS, mulberry(9001 + lCycle)), np = shuffle(NUMS, mulberry(7331 + nCycle));
-  const li = ((day - 1) % lc) * listPer, ni = ((day - 1) % nc) * numPer;
+  const lists = day < BANK2_FROM_DAY ? LISTS.slice(0, ORIGINAL_LISTS) : LISTS;
+  const lday = day < BANK2_FROM_DAY ? day : day - BANK2_FROM_DAY + 1;
+  const lc = Math.floor(lists.length / listPer), nc = Math.floor(NUMS.length / numPer);
+  const lCycle = Math.floor((lday - 1) / lc), nCycle = Math.floor((day - 1) / nc);
+  const lp = shuffle(lists, mulberry((day < BANK2_FROM_DAY ? 9001 : 9137) + lCycle)), np = shuffle(NUMS, mulberry(7331 + nCycle));
+  const li = ((lday - 1) % lc) * listPer, ni = ((day - 1) % nc) * numPer;
   const r = mulberry(day * 104729);
   const picked = lp.slice(li, li + listPer).concat(np.slice(ni, ni + numPer).map(t => buildNumberPrompt(t, r)));
   return shuffle(picked, mulberry(day * 31337));
@@ -228,7 +233,7 @@ function nextRound() {
   renderHeader();
   $('#roundlabel').textContent = `Question ${G.round + 1} of ${ROUNDS}`;
   $('#prompt').textContent = p.text;
-  $('#kind').textContent = p.kind === 'number' ? 'Number answer · you can type sums like 2^10 or 7*13' : p.hint ? p.hint : 'Word answer · spelling is forgiven';
+  $('#kind').textContent = p.kind === 'number' ? 'Number answer · you can type sums like 2^10 or 7*13' : p.hint ? p.hint : 'Word answer';
   $('#reveal').hidden = true; $('#play').hidden = false;
   const inp = $('#answer'); inp.value = ''; inp.disabled = true; $('#go').disabled = true; setMsg('');
   inp.inputMode = p.kind === 'number' ? 'numeric' : 'text';
@@ -331,12 +336,34 @@ function allAnswersHTML(p, r) {
   for (const k of order) {
     const items = all.filter(a => a.tier === k); if (!items.length) continue;
     const t = TIERS[k];
-    html += `<div class="tiergroup t-${k}"><div class="tg-head">${t.emoji} ${t.name} <span>+${t.pts} · ${items.length}</span></div>
+    // long tiers show the first SHOW_FIRST answers, with a button for the rest (your own answer is always shown)
+    const long = items.length > SHOW_FIRST + 5;
+    html += `<div class="tiergroup t-${k}${long ? ' long' : ''}"><div class="tg-head">${t.emoji} ${t.name} <span>+${t.pts} · ${items.length.toLocaleString('en-GB')}</span></div>
       ${k === 'outlier' && p.kind === 'list' && p.gem.note ? `<p class="tg-note"><b>${esc(p.gem.display)}</b>: ${esc(p.gem.note)}</p>` : ''}
-      <div class="tg-list">${items.map(a => `<span class="ans${a.display === mine ? ' mine' : ''}">${esc(a.display)}</span>`).join('')}</div></div>`;
+      <div class="tg-list">${items.map((a, i) => `<span class="ans${a.display === mine ? ' mine' : ''}${long && i >= SHOW_FIRST && a.display !== mine ? ' extra' : ''}" data-k="${esc(norm(a.display))}">${esc(a.display)}</span>`).join('')}</div>
+      ${long ? `<button type="button" class="seemore">See all ${items.length.toLocaleString('en-GB')}</button>` : ''}</div>`;
   }
-  return `<details class="every"><summary>Show every answer (${all.length.toLocaleString('en-GB')})</summary>${html}</details>`;
+  const search = all.length > 12 ? `<div class="ansearchrow"><input type="search" class="ansearch" placeholder="Search all ${all.length.toLocaleString('en-GB')} answers" aria-label="Search the answers to this question"><span class="ancount" aria-live="polite"></span></div>` : '';
+  return `<details class="every"><summary>Show every answer (${all.length.toLocaleString('en-GB')})</summary>${search}${html}</details>`;
 }
+const SHOW_FIRST = 30;
+/* "See all" buttons and the answer search on the results screen */
+$('#rows').addEventListener('click', e => {
+  const b = e.target.closest('.seemore'); if (!b) return;
+  const g = b.closest('.tiergroup'); const open = g.classList.toggle('expanded');
+  b.textContent = open ? 'Show fewer' : `See all ${g.querySelectorAll('.ans').length.toLocaleString('en-GB')}`;
+});
+$('#rows').addEventListener('input', e => {
+  const inp = e.target.closest('.ansearch'); if (!inp) return;
+  const box = inp.closest('.every'); const q = norm(inp.value); let n = 0;
+  box.classList.toggle('searching', !!q);
+  box.querySelectorAll('.tiergroup').forEach(g => {
+    let hits = 0;
+    g.querySelectorAll('.ans').forEach(a => { const hit = !q || a.dataset.k.includes(q); a.classList.toggle('hit', !!q && hit); a.classList.toggle('miss', !hit); if (hit) hits++; });
+    g.classList.toggle('nohits', !!q && !hits); n += hits;
+  });
+  box.querySelector('.ancount').textContent = q ? (n ? `${n.toLocaleString('en-GB')} found` : 'Not on the list') : '';
+});
 function shareText(results) {
   const s = scoreOf(results);
   const head = G.mode === 'daily' ? `Outlier #${G.day}` : 'Outlier Unlimited';
