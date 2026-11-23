@@ -48,8 +48,14 @@ function norm(s) {
   return s.toLowerCase().replace(/#/g, ' sharp').replace(/¾/g, ' 3/4').replace(/½/g, ' 1/2').replace(/¼/g, ' 1/4').normalize('NFD').replace(/[̀-ͯ]/g, '')
     .replace(/\b([a-z])\s+(\d)/g, '$1$2')
     .replace(/[’'`]s\b/g, '').replace(/[’'`]/g, '').replace(/[–—-]/g, ' ')
-    .replace(/[^a-z0-9πθαβγδεζηικλμνξορστυφχψωσ√+*^=. ]/g, ' ').replace(/\s+/g, ' ').trim();
+    .replace(/[^a-z0-9πθαβγδεζηικλμνξορστυφχψωσ√+*^=. ]/g, ' ').replace(/\s+/g, ' ').trim()
+    // number words and digits count as the same: "Twelve Angry Men" = "12 Angry Men", "twenty-one" = "21"
+    .replace(NUMWORD_RE, w => NUMWORDS[w]).replace(/\b([2-9])0 ([1-9])\b/g, '$1$2');
 }
+const NUMWORDS = Object.fromEntries(['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen',
+  'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty'].map((w, i) => [w, String(i)])
+  .concat([['thirty', '30'], ['forty', '40'], ['fifty', '50'], ['sixty', '60'], ['seventy', '70'], ['eighty', '80'], ['ninety', '90']]));
+const NUMWORD_RE = new RegExp('\\b(' + Object.keys(NUMWORDS).join('|') + ')\\b', 'g');
 function keyOf(s, strip) {
   let words = norm(s).split(' ').filter(Boolean);
   if (strip && strip.length) { const kept = words.filter(w => !strip.includes(w)); if (kept.length) words = kept; }
@@ -73,6 +79,16 @@ function editDistance(a, b, cap) {
   return d[a.length][b.length];
 }
 
+/* Two words count as the same word if they are equal, one letter apart (5+ letters), or the same word
+   with a different ending: they share all but the last two letters of the shorter one, at least 5 letters. */
+function wordsClose(a, b) {
+  if (a === b) return true;
+  if (/\d/.test(a) || /\d/.test(b)) return false;
+  const m = Math.min(a.length, b.length); if (m < 5) return false;
+  if (editDistance(a, b, 1) <= 1) return true;
+  const n = Math.max(5, m - 2); return a.slice(0, n) === b.slice(0, n);
+}
+
 function buildListPrompt(p) {
   const entries = [], index = new Map();
   const add = (raw, tier) => {
@@ -93,11 +109,15 @@ function buildListPrompt(p) {
       const k = keyOf(input, p.strip); if (!k) return null;
       const hit = index.get(k) || index.get(singular(k));
       if (hit) return { entry: hit, corrected: false };
-      if (/\d/.test(k)) return null;   // never "correct" numbers: 1067 is not a typo for 1066
-      const cap = k.length <= 3 ? 0 : k.length <= 7 ? 1 : 2; if (!cap) return null;
+      if (/^[\d\s.\/+*^=-]+$/.test(k)) return null;   // never "correct" a bare number: 1067 is not a typo for 1066
+      const cap = /\d/.test(k) || k.length <= 3 ? 0 : k.length <= 7 ? 1 : 2;
       let best = null, bd = cap + 1;
-      for (const [key, e] of index) { const dist = editDistance(k, key, cap); if (dist < bd) { bd = dist; best = e; } }
-      return best ? { entry: best, corrected: true } : null;
+      if (cap) for (const [key, e] of index) { const dist = editDistance(k, key, cap); if (dist < bd) { bd = dist; best = e; } }
+      if (best) return { entry: best, corrected: true };
+      // word forms: "triangle" for "triangular", "pentagon" for "pentagonal", "Fibonaci sequence" for "Fibonacci"
+      const words = k.split(' ');
+      for (const [key, e] of index) { const kw = key.split(' '); if (kw.length === words.length && kw.every((w, i) => wordsClose(words[i], w))) return { entry: e, corrected: true }; }
+      return null;
     }
   };
 }

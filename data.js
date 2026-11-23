@@ -161,15 +161,15 @@ window.OUTLIER_LISTS = [
     gemNote: '1, 2, 2, 1, 1, 2, 1, 2, 2, 1… The sequence describes its own run lengths, and nobody has proved it has as many 1s as 2s.'
   },
   {
-    id: 'fractals', strip: ['the', 'fractal', 'set', 'curve'],
+    id: 'fractals', strip: ['the', 'fractal', 'set'],
     text: 'Name a famous fractal',
     mode: ['Mandelbrot set|Mandelbrot'],
-    cliche: ['Koch snowflake|Koch|snowflake'],
-    mean: ['Sierpiński triangle|Sierpinski triangle|Sierpinski gasket', 'Julia set|Julia', 'Cantor set|Cantor'],
+    cliche: ['Koch snowflake|Koch|snowflake|Koch curve'],
+    mean: ['Sierpiński triangle|Sierpinski triangle|Sierpinski gasket|Sierpinski', 'Julia set|Julia', 'Cantor set|Cantor'],
     tail: ['Menger sponge|Menger', 'Dragon curve|Heighway dragon|dragon', 'Barnsley fern|fern', 'Hilbert curve|Hilbert', 'Sierpiński carpet|Sierpinski carpet',
       'Peano curve|Peano', 'Lorenz attractor|Lorenz', 'Pythagoras tree', 'Romanesco broccoli'],
-    far: ['Lévy C curve|Levy C', 'Burning Ship', 'Vicsek fractal|Vicsek', 'Gosper curve|flowsnake', 'Newton fractal', 'Mandelbox', 'Mandelbulb',
-      'Rauzy fractal|Rauzy', 'Weierstrass function|Weierstrass', 'Takagi curve|blancmange curve', 'Cesàro fractal', 'T-square', 'Hénon attractor|Henon',
+    far: ['Lévy C curve|Levy C', 'Burning Ship', 'Vicsek fractal|Vicsek', 'Gosper curve|flowsnake|Gosper', 'Newton fractal', 'Mandelbox', 'Mandelbulb',
+      'Rauzy fractal|Rauzy', 'Weierstrass function|Weierstrass', 'Takagi curve|blancmange curve|Takagi|blancmange', 'Cesàro fractal', 'T-square', 'Hénon attractor|Henon',
       'Minkowski sausage', 'Lyapunov fractal'],
     gem: 'Apollonian gasket',
     gemNote: 'Keep filling the gaps between touching circles with more circles, forever. Some versions have only whole-number curvatures.'
@@ -227,7 +227,7 @@ window.OUTLIER_LISTS = [
     tail: ['Pigeonhole', 'Diagonal argument|diagonalisation|diagonalization|Cantor\'s diagonal', 'Strong induction', 'Construction|constructive proof',
       'Computer-assisted proof|computer proof', 'Double counting', 'Bijective proof|bijection', 'Infinitesimals'],
     far: ['Probabilistic method', 'Transfinite induction', 'Forcing', 'Compactness', 'Telescoping', 'Extremal principle', 'Invariant|invariants',
-      'Well-ordering', 'Zorn\'s lemma|Zorn', 'Combinatorial proof', 'Formal verification|Lean', 'Method of exhaustion'],
+      'Well-ordering', 'Zorn\'s lemma|Zorn', 'Combinatorial proof', 'Formal verification|Lean', 'Method of exhaustion (Eudoxus and Archimedes)|Eudoxus|Archimedes method'],
     gem: 'Infinite descent',
     gemNote: 'Fermat\'s favourite: show that any solution would produce a smaller one, forever, which is impossible for whole numbers.'
   },
@@ -487,7 +487,7 @@ window.OUTLIER_LISTS.push(
     },
     fractals: {
       tail: ['Sierpiński pyramid|Sierpinski tetrahedron|Sierpinski pyramid', 'Fractal tree|binary tree', 'Lightning|Lichtenberg figure', 'Coastline of Britain|coastline'],
-      far: ['Cantor dust', 'Moore curve', 'Sierpiński curve|Sierpinski curve', 'Sierpiński arrowhead|Sierpinski arrowhead', 'Hexaflake', 'Pentaflake',
+      far: ['Cantor dust', 'Moore curve|Moore', 'Sierpiński curve|Sierpinski curve', 'Sierpiński arrowhead|Sierpinski arrowhead', 'Hexaflake', 'Pentaflake',
         'Jerusalem cube', 'Mosely snowflake', 'Fibonacci word fractal', 'Rössler attractor|Rossler', 'Logistic map|bifurcation diagram|Feigenbaum tree',
         'Buddhabrot', 'Tricorn|Mandelbar', 'Douady rabbit', 'H-tree|H fractal', 'Brownian motion']
     },
