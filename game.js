@@ -5,7 +5,7 @@
 const ROUNDS = 7, PREVIEW_MS = 3000, ANSWER_MS = 30000;
 const EPOCH = '2026-11-20';            // Outlier #1
 const TZ = 'Europe/London';            // the daily resets at midnight UK time
-const HOME_URL = 'https://theaxiommaths.com';
+const HOME_URL = 'https://etonaxiom.com';
 const TIERS = {
   mode:    { name: 'Mode',       pts: 10,  emoji: '⬜', blurb: 'The answer everyone gives.' },
   cliche:  { name: 'Cliché',     pts: 15,  emoji: '🟨', blurb: 'Feels obscure. Everybody thinks of it.' },
